@@ -1,15 +1,15 @@
 {
   "files": {
     "main.css": "/Territorial-Education-with-AI/static/css/main.52c6af17.css",
-    "main.js": "/Territorial-Education-with-AI/static/js/main.9e282c2c.js",
+    "main.js": "/Territorial-Education-with-AI/static/js/main.feb6bfab.js",
     "static/js/488.11f14f95.chunk.js": "/Territorial-Education-with-AI/static/js/488.11f14f95.chunk.js",
     "index.html": "/Territorial-Education-with-AI/index.html",
     "main.52c6af17.css.map": "/Territorial-Education-with-AI/static/css/main.52c6af17.css.map",
-    "main.9e282c2c.js.map": "/Territorial-Education-with-AI/static/js/main.9e282c2c.js.map",
+    "main.feb6bfab.js.map": "/Territorial-Education-with-AI/static/js/main.feb6bfab.js.map",
     "488.11f14f95.chunk.js.map": "/Territorial-Education-with-AI/static/js/488.11f14f95.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.52c6af17.css",
-    "static/js/main.9e282c2c.js"
+    "static/js/main.feb6bfab.js"
   ]
 }
