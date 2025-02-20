@@ -25,14 +25,14 @@ function App() {
 
   // 프롬프트 문자열 생성 함수
   const generatePromptString = () => {
-    const promptString = `${promptInputs.case} 영토 분쟁을 사례로 캠페인 노래를 만들거야. 이 사례는 ${promptInputs.conflict}이 갈등을 겪고 있고, ${promptInputs.background}이 핵심적인 분쟁 배경이야. 해결 방안으로는 ${promptInputs.solution}이 필요해.`;
+    const promptString = `[${promptInputs.case}] 영토 분쟁을 사례로 캠페인 노래를 만들거야. 이 사례는 [${promptInputs.conflict}]이/가 갈등을 겪고 있고, [${promptInputs.background}]이/가 핵심적인 분쟁 배경이야. 해결 방안으로는 [${promptInputs.solution}]이/가 필요해.`;
     setGeneratedText(promptString); // 생성된 문장을 상태에 저장
     navigator.clipboard.writeText(promptString); // 클립보드에 복사
   };
 
   // 2단계 노래 프롬프트 생성 함수
   const generateSongPrompt = () => {
-    const promptString = `이 노래는 영토 분쟁을 해결에 도움을 주기 위한 캠페인 송이야. 박자는 [${selectedRhythm}]로 하고, 스케일은 [${selectedScale}]로 해줘. 장르는 [${selectedGenre}]이고, 참고할 노래는 [${referenceSong}]으로, 이 노래와 비슷한 느낌이 나도록 만들어.`;
+    const promptString = `이 노래는 영토 분쟁을 해결에 도움을 주기 위한 캠페인 송이야. 박자는 [${selectedRhythm}]으로 하고, 스케일은 [${selectedScale}] 스케일로 해줘. 장르는 [${selectedGenre}]이고, 참고할 노래는 [${referenceSong}]이야. 이 노래와 비슷한 느낌이 나도록 만들어줘.`;
     setSongPrompt(promptString); // 생성된 노래 프롬프트를 상태에 저장
   };
 
@@ -55,7 +55,14 @@ function App() {
         <div className="prompt-section">
           <h2>프롬프트 작성</h2>
           <p>이 단계에서는 AI에게 명령할 프롬프트를 작성합니다.</p>
-          <p>아래 박스에 각 내용을 입력하고, 출력하기 버튼을 눌러주세요.</p>
+          <p>학습내용을 바탕으로 아래 박스를 채우고, 출력하기 버튼을 눌러주세요.</p>
+          <h3>예시</h3>
+          <p>갈등 사례: 독도 영유권  /  갈등 국가명: 한국과 일본</p>
+          <p>핵심 분쟁 배경: 역사적, 국제법적 대립</p>
+          <p>해결 방안: 올바른 역사 교육, 국제법에 따른 절차 준수</p>
+          <h3>프롬프트</h3>
+          <p>[ &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ] 영토 분쟁을 사례로 캠페인 노래를 만들거야. 이 사례는 [ &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ]이/가 갈등을 겪고 있고,</p> 
+          <p>[ &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ]이/가 핵심적인 분쟁 배경이야. 해결 방안으로는 [ &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ]이/가 필요해.</p>
           
           <input
             type="text"
@@ -99,10 +106,11 @@ function App() {
       {activeTab === '가사 만들기' && (
         <div className="step-container">
           <h2>1단계: 가사 만들기</h2>
+          <p>아래 프롬프트를 이용해 텍스트 생성형 AI와 함께 가사를 만들어보세요!</p>
           <textarea
             readOnly
             value={`${generatedText}\n\n위 프롬프트를 바탕으로 영토 분쟁쟁 캠페인 송 가사를 작성해줘.\n조건은 다음과 같아. \n1. 분량은 30초, 벌스 1개, 코러스 1개로 만들면 돼. \n2. 각 파트는 총 4줄로 구성하고, 각 줄은 최대 4어절이야. \n3. 가사에 갈등 국가, 분쟁 배경, 해결 방안이 반드시 들어가도록 해줘.`}
-            rows="8"
+            rows="12"
             className="generated-text"
             placeholder="생성된 가사가 여기에 나타납니다..."
           />
@@ -116,10 +124,11 @@ function App() {
         <div className="step-container">
           <h2>2단계: 노래 만들기</h2>
           <p>1단계에서 만든 가사를 이용하여 노래를 만들어보세요!</p>
+          <p>아래 프롬프트를 이용해 오디오 생성형 AI와 함께 캠페인 송을 제작해봅시다!</p>
 
           <div className="select-group">
             <label>
-              박자:
+              박자: 
               <select onChange={(e) => setSelectedRhythm(e.target.value)}>
                 <option value="60">60</option>
                 <option value="100">100</option>
@@ -130,7 +139,7 @@ function App() {
 
           <div className="select-group">
             <label>
-              스케일:
+              스케일: 
               <select onChange={(e) => setSelectedScale(e.target.value)}>
                 <option value="C">C</option>
                 <option value="D">D</option>
@@ -145,7 +154,7 @@ function App() {
 
           <div className="select-group">
             <label>
-              장르:
+              장르: 
               <select onChange={(e) => setSelectedGenre(e.target.value)}>
                 <option value="POP">POP</option>
                 <option value="HIP-HOP">HIP-HOP</option>
@@ -174,21 +183,26 @@ function App() {
           <a href="https://www.udio.com/" target="_blank" rel="noopener noreferrer" className="link-box">
             노래 만들기 페이지로 이동
           </a>
+          <p> </p>
+          <a href="https://drive.google.com/file/d/1ofUdfHFj1zemiI1dmIgrh0aGmH4tQk7j/view?usp=sharing" target="_blank" rel="noopener noreferrer" className="link-box">
+            !노래 만들기 가이드!
+          </a>
         </div>
       )}
 
       {activeTab === '앨범 커버 만들기' && (
         <div className="step-container">
           <h2>3단계: 앨범 커버 만들기</h2>
-          <p>위 사례를 바탕으로 영토 분쟁을 다루는 노래의 앨범 표지를 만들고 싶어.</p>
+          <p>아래 프롬프트를 이용해 이미지 생성형 AI와 함께 캠페인 앨범 표지를 제작해봅시다!</p>
+          <p>구체적인 이미지 구상을 아래 프롬프트에 추가로 넣어주세요</p>
           <textarea
             readOnly
-            value={`${generatedText}\n\n위 사례를 바탕으로 영토 분쟁을 다루는 노래의 앨범 표지를 만들고 싶어.`}
+            value={`${generatedText}\n\n위 사례를 바탕으로 영토 분쟁을 다루는 노래의 앨범 표지를 만들고 싶어. \n\n[...여기에 내용을 추가하세요...]`}
             rows="8"
             className="generated-text"
             placeholder="생성된 앨범 커버 프롬프트가 여기에 나타납니다..."
           />
-          <a href="https://www.bing.com/images/create?FORM=GENILP" target="_blank" rel="noopener noreferrer" className="link-box">
+          <a href="https://wrtn.ai/" target="_blank" rel="noopener noreferrer" className="link-box">
             앨범 커버 만들기 페이지로 이동
           </a>
         </div>
@@ -197,10 +211,10 @@ function App() {
       {activeTab === '뮤직비디오 만들기' && (
         <div className="step-container">
           <h2>4단계: 뮤직비디오 만들기</h2>
-          <p>이 영상은 위 영토 분쟁을 사례로 해서 분쟁 해결에 도움을 줄 수 있는 캠페인의 뮤직비디오야.</p>
+          <p>아래 프롬프트를 이용해 영상 생성형 AI와 함께 캠페인 뮤직비디오에 들어갈 영상을 제작해봅시다!</p>
           <textarea
             readOnly
-            value={`${generatedText}\n\n이 영상은 위 영토 분쟁을 사례로 해서 분쟁 해결에 도움을 줄 수 있는 캠페인의 뮤직비디오야.`}
+            value={`${generatedText}\n\n이 영상은 위 영토 분쟁을 사례로 해서 분쟁 해결에 도움을 줄 수 있는 캠페인의 뮤직비디오야.\n참고 이미지를 바탕으로 [...내용을 추가해주세요...] 영상을 제작해줘.`}
             rows="8"
             className="generated-text"
             placeholder="생성된 뮤직비디오 프롬프트가 여기에 나타납니다..."
